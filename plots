@@ -5,7 +5,7 @@ from matplotlib.pyplot import figure
 import seaborn as sns
 
 df = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
-#calculates the percentage of tha daily total reads of each taxon 
+#calculates the percentage of tha daily total reads of each taxon in a new column named as percent 
 dict_counts={}
 grouped=df.groupby("Day_related_to_HCT")
 for day,group in grouped:
