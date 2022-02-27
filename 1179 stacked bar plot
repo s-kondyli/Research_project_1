@@ -24,8 +24,9 @@ df['corresp_sum']=df['Day_related_to_HCT'].map(dict_counts)
 df['percent']=df.apply(lambda row: row.Read_counts/row.corresp_sum*100,axis=1)
 
 df1=df.groupby(['Day_related_to_HCT','Name'])['percent'].sum().sort_values(ascending=False).reset_index()
-df1.pivot_table(index='Day_related_to_HCT', columns='Name').plot(kind= 'bar', stacked=True )
-plt.legend(loc=2,  prop={'size':3})
+colors = plt.cm.PuBu_r(np.linspace(0, 1, 20)) #plot colormap (_r for reversing the order of  colors, 20 because you want at least 20 different colors)
+df1.pivot_table(index='Day_related_to_HCT', columns='Name').plot(kind= 'bar', stacked=True , color=colors, figsize= (20, 10) )
+plt.legend(bbox_to_anchor=(1.04,1), loc="upper left", prop={'size':8}) #places the legend outside of the axes of the plot in the upper left corner
 plt.title('Patient 1179 microbiota composition over time')
 plt.xlabel('Day related to HCT')
 plt.tight_layout()
