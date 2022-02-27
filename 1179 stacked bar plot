@@ -30,4 +30,5 @@ plt.title('Patient 1179 microbiota composition over time')
 plt.xlabel('Day related to HCT')
 plt.tight_layout()
 plt.ylabel('% of read counts')
+#saves figure in desired path 
 plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/filename.png', dpi=1200)
