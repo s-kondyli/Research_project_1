@@ -22,7 +22,7 @@ for patient, group in df2:
     df3=df3.append(group,ignore_index=True)
 df3.sort_values('Read_counts',ascending=False)
 
-#Sums the reads of the 'others' in column Name of each group 
+#Sums the reads of each group based on the column name  
 df4=df3.groupby(['Patient_ID','Name'])['Read_counts'].sum().reset_index()
 
 #Save the filtered dataframe to a temp file 
