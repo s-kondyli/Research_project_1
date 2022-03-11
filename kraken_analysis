@@ -1,0 +1,18 @@
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib.pyplot import figure
+import re
+
+#Import tsv files
+data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/mg.kraken.parsed.tsv", sep='\t')
+
+#Keeps from the column D all the values that are not NaN
+
+data = data[data['D'].notna()]
+
+#Keeps the rows of the columns D that contain a specific name
+df = data.loc[data['D'].str.contains('Eukaryota')]
+
+# Groups by Species column and sums up all the contigs lenght of each taxon 
+df2 = df.groupby(['S'])['length'].sum().sort_values(ascending=False).reset_index()
