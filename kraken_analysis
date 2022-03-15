@@ -4,24 +4,25 @@ from matplotlib import pyplot as plt
 from matplotlib.pyplot import figure
 import re
 
-#Import tsv files
+# Import tsv files
 data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/mg.kraken.parsed.tsv", sep='\t')
 
-#Keeps from the column D all the values that are not NaN
+# Keeps from the column K all the values that are not NaN (basically drops NaN from specific column)
+data = data[data['K'].notna()]
 
-data = data[data['D'].notna()]
+# Keeps the rows of the column K that contain a specific name
+df = data.loc[data['K'].str.contains('Fungi')]
 
-#Keeps the rows of the columns D that contain a specific name
-df = data.loc[data['D'].str.contains('Eukaryota')]
+# Keeps from the column S all the values that are not NaN (we need it because some rows are empty/not classified)
+df = df.loc[df['S'].notna()]
 
-# Groups by Species column and sums up all the contigs lenght of each taxon 
-df2 = df.groupby(['S'])['length'].sum().sort_values(ascending=False).reset_index()
+# Creates a new percentage column that for each row in the groupby object calculates the percentage of the contig length 
+df['%'] = df.groupby(['S'])['length'].transform(lambda x: x/x.sum()*100)
+# Reorder and keep only the columns you are interested in
+df = df[['S', 'length']]
 
-df2.plot(x ='S', y ='length', kind='barh', figsize=(20,10))
-plt.legend(bbox_to_anchor=(1.04, 1), loc="upper left", prop={'size':4}) #places the legend outside of the axes of the plot in the upper left corner
-plt.title('Patient 1203 day 14 post HCT Eukaryota  total contig lenghts')
-plt.xlabel(' total contig length')
-plt.tight_layout()
-plt.ylabel('taxa')
+# Get statistics for each group 
+df = df.groupby('S').describe().unstack().reset_index().pivot(index='S', columns='level_1').reset_index()
 
-plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/filename.png', dpi=1200)
+# Save to a file
+df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/temp.csv', index=False)
