@@ -22,7 +22,7 @@ df['%'] = df.groupby(['S'])['length'].transform(lambda x: x/x.sum()*100)
 df = df[['S', 'length']]
 
 # Get statistics for each group 
-df = df.groupby('S').describe().unstack().reset_index().pivot(index='S', columns='level_1').reset_index()
+df = df.groupby('S').describe().unstack(1).reset_index().pivot(index='S', columns='level_1', values=0).reset_index()
 
 # Save to a file
 df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/temp.csv', index=False)
