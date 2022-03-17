@@ -27,4 +27,4 @@ df = df[['S', 'length']]
 df = df.groupby('S').describe().unstack(1).reset_index().pivot(index='S', columns='level_1', values=0).reset_index()
 
 # Save to a file
-df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/assembly_stats.csv', index=False)
+df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/assembly_stats_sPatientID.csv', index=False)
