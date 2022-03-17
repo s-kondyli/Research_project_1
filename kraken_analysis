@@ -5,7 +5,7 @@ from matplotlib.pyplot import figure
 import re
 
 # Import tsv files
-data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/mg.kraken.parsed.tsv", sep='\t')
+data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/mg.kraken.parsed_1042F.tsv", sep='\t')
 
 # Keeps from the column K all the values that are not NaN (basically drops NaN from specific column)
 data = data[data['K'].notna()]
@@ -25,4 +25,4 @@ df = df[['S', 'length']]
 df = df.groupby('S').describe().unstack(1).reset_index().pivot(index='S', columns='level_1', values=0).reset_index()
 
 # Save to a file
-df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/temp.csv', index=False)
+df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/assembly_stats.csv', index=False)
