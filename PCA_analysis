@@ -1,0 +1,27 @@
+import pandas as pd
+import numpy as np
+import Bio
+import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
+from sklearn import preprocessing
+
+
+data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
+data = data[data['Name'].notna()]
+#data['Patient'] = data['Patient_ID'].str[:4]
+data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
+data = data.pivot(index='Name', columns='Day_related_to_HCT', values='Read_counts')
+data = data.fillna(0) # fills NaN values with 0 for the matrix
+scaled_data = preprocessing.scale(data.T)
+pca = PCA()
+pca.fit(scaled_data)
+pca_table = pca.transform(scaled_data)
+#Creates a scree bar plot to decide which Principal components to include
+per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
+labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
+plt.bar(x=range(1,len(per_var)+1), height=per_var, tick_label=labels)
+plt.ylabel('Percentage of Explained Variance')
+plt.xlabel('Principal Component')
+plt.title('scree plot')
+plt.show()
+
