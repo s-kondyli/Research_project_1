@@ -12,14 +12,14 @@ data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_count
 data = data.fillna(0) # fills NaN values with 0 for the matrix
 index1 = data.index.tolist() # creates a list of all indeces to be passed later when creating the pca_df
 # Scale & center the data 
-scaled_data = preprocessing.scale(data)
+scaled_data = preprocessing.scale(data) # expects samples to be rows which in our case is true because in data index=Day_related_to_HCT. Otherwise we would need to transpose the data like this: data.T
 pca = PCA()
 pca.fit(scaled_data)
 pca_table = pca.transform(scaled_data)
 per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
 
-# Creates a scree bar plot to decide which princical components should be included
+# Creates a scree bar plot to decide which princical components should be included 
 
 plt.bar(x=range(1,len(per_var)+1), height=per_var, tick_label=labels)
 plt.ylabel('Percentage of Explained Variance')
