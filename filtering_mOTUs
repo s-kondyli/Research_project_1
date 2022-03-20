@@ -25,5 +25,5 @@ df3.sort_values('Read_counts',ascending=False)
 #Sums the reads of each group based on the column name  
 df4=df3.groupby(['Patient_ID','Name'])['Read_counts'].sum().reset_index()
 
-#Save the filtered dataframe to a temp file 
+#Save the filtered dataframe to a temporary file 
 df4.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/temp.csv', index=False)
