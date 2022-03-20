@@ -1,6 +1,6 @@
 import pandas as pd
 # Filtering the original mOTUs.s.tsv file to keep only the species level
-motus_df = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs.s.tsv', , sep='\t')
+motus_df = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs.s.tsv', sep='\t')
 motus_df['Unnamed: 0'] = motus_df['Unnamed: 0'].str.rsplit('|',1).apply(lambda x:x[1])
 motus_df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/mOTUspecies.csv', index=False)
 
