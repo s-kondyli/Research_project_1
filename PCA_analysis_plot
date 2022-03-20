@@ -28,6 +28,7 @@ plt.ylabel('PC2 - {0}%'.format(per_var[1]))
 plt.title('PCA scatter plot for 1179 Patient')
 for day in pca_df.index:
     plt.annotate(day, (pca_df.PC1.loc[day], pca_df.PC2.loc[day]))
-plt.show()
 
+#Saves figure in desired path 
+plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/EukDetect/PCA_plot_1179.png', dpi=1200)
 
