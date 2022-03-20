@@ -12,6 +12,7 @@ data = data[data['Name'].notna()]
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
 data = data.pivot(index='Name', columns='Day_related_to_HCT', values='Read_counts')
 data = data.fillna(0) # fills NaN values with 0 for the matrix
+# Scale & center the data 
 scaled_data = preprocessing.scale(data.T)
 pca = PCA()
 pca.fit(scaled_data)
