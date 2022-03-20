@@ -1,12 +1,12 @@
 import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.pyplot import figure
-import seaborn as sns
+# Filtering the original mOTUs.s.tsv file to keep only the species level
+motus_df = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs.s.tsv', , sep='\t')
+motus_df['Unnamed: 0'] = motus_df['Unnamed: 0'].str.rsplit('|',1).apply(lambda x:x[1])
+motus_df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/mOTUspecies.csv', index=False)
 
 # Import data from excel files & specifying sheets
 data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_Python2.xlsx', sheet_name='Patient_1179')
-df = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_Python2.xlsx', sheet_name='mOTUs')
+df = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/mOTUspecies.csv')
 
 # Filter out of the mOTUs the patient ID we are interested in each time
 values = data['Patient_ID']
