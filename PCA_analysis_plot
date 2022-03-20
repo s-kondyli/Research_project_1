@@ -23,9 +23,9 @@ labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
 
 pca_df = pd.DataFrame(pca_data, index=list(index1) , columns=labels) 
 plt.scatter(pca_df.PC1, pca_df.PC2, cmap='Pastel1')
-plt.ylabel('Percentage of Explained Variance')
-plt.xlabel('Principal Component')
-plt.title('kaak')
+plt.xlabel('PC1 - {0}%'.format(per_var[0])) # represents the percentage weight for each PC
+plt.ylabel('PC2 - {0}%'.format(per_var[1]))
+plt.title('PCA scatter plot for 1179 Patient')
 for day in pca_df.index:
     plt.annotate(day, (pca_df.PC1.loc[day], pca_df.PC2.loc[day]))
 plt.show()
