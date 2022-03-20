@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
 
-
+# Import our data
 data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
 data = data[data['Name'].notna()] # drops NaN values from Name column
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
