@@ -1,0 +1,16 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
+data = data[data['Name'].notna()]
+data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
+data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts').T
+data = data.fillna(0)
+sns.heatmap(data, cmap='BuPu', linewidth=.7)
+plt.xticks(rotation=0, fontsize=5) # rotation & size of the ticks
+plt.yticks(rotation=4, fontsize=4)
+plt.title('Patient 1179 Heatmap')
+plt.tight_layout()
+#plt.show()
+plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/Patient_1179_Heatmap.png' , dpi=1200)
