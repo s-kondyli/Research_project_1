@@ -25,4 +25,7 @@ plt.bar(x=range(1,len(per_var)+1), height=per_var, tick_label=labels)
 plt.ylabel('Percentage of Explained Variance')
 plt.xlabel('Principal Component')
 plt.title('Scree plot')
-plt.show()
+
+
+#Saves figure in desired path 
+plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/EukDetect/scree_plot_1179.png', dpi=1200)
