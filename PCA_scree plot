@@ -5,8 +5,7 @@ from sklearn.decomposition import PCA
 from sklearn import preprocessing
 
 # Import data and manipulate them in the format needed for scaling & centering 
-
-data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
+data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTus/Results_python.csv')
 data = data[data['Name'].notna()] # drops NaN values from Name column
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
 data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts')
@@ -22,7 +21,6 @@ per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
 
 # Creates a scree bar plot to decide which princical components should be included 
-
 plt.bar(x=range(1,len(per_var)+1), height=per_var, tick_label=labels)
 plt.ylabel('Percentage of Explained Variance')
 plt.xlabel('Principal Component')
