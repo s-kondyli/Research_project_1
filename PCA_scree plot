@@ -15,7 +15,7 @@ index1 = data.index.tolist() # creates a list of all indeces to be passed later 
 scaled_data = preprocessing.scale(data) # expects samples to be rows which in our case is true because in data index=Day_related_to_HCT. Otherwise we would need to transpose the data like this: data.T
 pca = PCA()
 pca.fit(scaled_data)
-pca_table = pca.transform(scaled_data)
+pca_data = pca.transform(scaled_data)
 per_var = np.round(pca.explained_variance_ratio_ * 100, decimals=1)
 labels = ['PC' + str(x) for x in range(1, len(per_var)+1)]
 
@@ -27,4 +27,4 @@ plt.xlabel('Principal Component')
 plt.title('Scree plot')
 
 #Saves figure in desired path 
-plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/EukDetect/scree_plot_1179.png', dpi=1200)
+plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/scree_plot_1179.png', dpi=1200)
