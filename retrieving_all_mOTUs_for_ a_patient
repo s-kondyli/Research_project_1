@@ -13,6 +13,8 @@ data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/P
 # Filter out of the mOTUs_df the patient ID we are interested in each time
 values = data['Patient_ID']
 data_bacteria = motus_df[motus_df['Patient_ID'].isin(values)]
+data_bacteria = data_bacteria.replace(0, np.nan) # replaces 0 with NaN values
+data_bacteria = data_bacteria[data_bacteria['Read_counts'].notna()] # drops NaN values from column Read_counts 
 
 #Save the filtered dataframe to a file
 data_bacteria.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/bacteria_1042_Patient.csv', index=False)
