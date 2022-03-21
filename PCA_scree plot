@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 from sklearn import preprocessing
 
+# Import data and manipulate them in the format needed for scaling & centering 
 
 data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
 data = data[data['Name'].notna()] # drops NaN values from Name column
@@ -11,6 +12,7 @@ data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
 data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts')
 data = data.fillna(0) # fills NaN values with 0 for the matrix
 index1 = data.index.tolist() # creates a list of all indeces to be passed later when creating the pca_df
+
 # Scale & center the data 
 scaled_data = preprocessing.scale(data) # expects samples to be rows which in our case is true because in data index=Day_related_to_HCT. Otherwise we would need to transpose the data like this: data.T
 pca = PCA()
