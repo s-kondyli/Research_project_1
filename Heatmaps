@@ -2,14 +2,22 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Patient_1179')
+data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/topbacteria_1179_patient.csv')
 data = data[data['Name'].notna()]
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
 data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts').T
 data = data.fillna(0)
-sns.heatmap(data, cmap='BuPu', linewidth=.7)
-plt.xticks(rotation=0, fontsize=5) # rotation & size of the ticks
-plt.yticks(rotation=4, fontsize=4)
+index = data.index.tolist() # for the scaled dataframe 
+columns = data.columns.tolist() # for the scaled dataframe 
+# Scale the data 
+std_scaler = StandardScaler()
+scaled_data = std_scaler.fit_transform(data)
+# Create the scaled dataframe
+scaled_datadf = pd.DataFrame(scaled_data, index=index, columns=columns)
+
+sns.heatmap(scaled_datadf, cmap='BuPu', linewidth=0.7)
+plt.xticks(rotation=0, fontsize=4) # rotation & size of the ticks
+plt.yticks(rotation=4, fontsize=6)
 plt.title('Patient 1179 Heatmap')
 plt.tight_layout()
 #plt.show()
