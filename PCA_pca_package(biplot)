@@ -1,6 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from pca import pca
+from skbio.stats.composition import clr, multiplicative_replacement
+
 data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/bacteria_1042_Patient.csv')
 data = data[data['Name'].notna()] # drops NaN values from Name column
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
