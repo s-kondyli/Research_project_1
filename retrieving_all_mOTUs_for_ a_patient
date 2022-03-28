@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np 
 
 # Filtering the original mOTUs.s.tsv file to keep only the species level with split
 motus_df = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs.s.tsv', sep='\t')
