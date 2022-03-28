@@ -11,7 +11,7 @@ data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Res
 data = data[data['K'].notna()]
 data = data[data['D'].notna()]
 
-# Keeps the rows of the column K that contain a specific name
+# Keeps the rows of a column x that contain a specific name
 df = data.loc[data['D'].str.contains('Eukaryota')]
 df = data.loc[data['K'].str.contains('Fungi')]
 
