@@ -7,7 +7,7 @@ import re
 # Import tsv files
 data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/mg.kraken.parsed_1042F.tsv", sep='\t')
 
-# Keeps from the column K all the values that are not NaN (basically drops NaN from specific column)
+# Keeps from the column x all the values that are not NaN (basically drops NaN from specific column)
 data = data[data['K'].notna()]
 data = data[data['D'].notna()]
 
