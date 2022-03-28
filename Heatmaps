@@ -16,11 +16,13 @@ data = multiplicative_replacement(data)
 
 data = clr(data)
 
-scaled_datadf = pd.DataFrame(data, index=index, columns=columns)
+scaled_datadf = pd.DataFrame(data, index=index, columns=columns , yticklabels=True) #yticklabels for all taxa to appear
 sns.heatmap(scaled_datadf, cmap='BuPu', linewidth=0.7)
 plt.xticks(rotation=0, fontsize=4) # rotation & size of the ticks
 plt.yticks(rotation=4, fontsize=6)
-plt.title('Patient 1179 Heatmap')
+plt.ylabel('Taxa')
+plt.xlabel('Day related to HCT')
+plt.title('Patient 668 Heatmap')
 plt.tight_layout()
 #plt.show()
 plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/Patient_1179_Heatmap.png' , dpi=1200)
