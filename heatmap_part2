@@ -12,7 +12,7 @@ data = clr(data) # center-log ratio transformation
 # Creating the new scaled_df 
 scaled_df = pd.DataFrame(data, index=index, columns=columns)
 # Plotting the heatmap 
-sns.heatmap(scaled_df, cmap='BuPu', linewidth=0.7, yticklabels=True) #yticklabels for all taxa to appear
+sns.heatmap(scaled_df, cmap='BuPu', linewidth=0.7, yticklabels=True, xticklabels=True) #yticklabels for all taxa to appear
 plt.xticks(rotation=0, fontsize=4) # rotation & size of the ticks
 plt.yticks(rotation=4, fontsize=6)
 plt.ylabel('Taxa')
