@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from skbio.stats.composition import clr, multiplicative_replacement
 data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/1179_ordered.csv')
-data = data[data['Name'].notna()]
 data = data.set_index('Name') #reseting the index
 index = data.index # storing the index into a list for the scaled_df for the plot 
 columns = data.columns.tolist() # storing the columns into a list for the scaled_df for the plot 
