@@ -1,3 +1,4 @@
+import sys 
 import pandas as pd
 data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/topbacteria_1179_patient.csv')
 data = data[data['Name'].notna()]
