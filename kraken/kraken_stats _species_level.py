@@ -1,11 +1,7 @@
 import pandas as pd
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib.pyplot import figure
-import re
-
+import sys
 # Import tsv files
-data = pd.read_csv("C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/mg.kraken.parsed_1042F.tsv", sep='\t')
+data = pd.read_csv(sys.argv[1],sep='\t')
 
 # Keeps from the column x all the values that are not NaN (basically drops NaN from specific column)
 data = data[data['K'].notna()]
@@ -17,14 +13,11 @@ df = data.loc[data['K'].str.contains('Fungi')]
 
 # Keeps from the column S all the values that are not NaN (we need it because some rows are empty/not classified)
 df = df.loc[df['S'].notna()]
-
-# Creates a new percentage column that for each row in the groupby object calculates the percentage of the contig length 
-df['%'] = df.groupby(['S'])['length'].transform(lambda x: x/x.sum()*100)
 # Reorder and keep only the columns you are interested in
-df = df[['S', 'length']]
-
-# Get statistics for each group 
+#df = df[['contig', 'length', 'S']]
+df = df[['length', 'S']]
+# Get statistics for each group
 df = df.groupby('S').describe().unstack(1).reset_index().pivot(index='S', columns='level_1', values=0).reset_index()
 
 # Save to a file
-df.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/assembly_stats_sPatientID.csv', index=False)
+df.to_csv(sys.argv[2],index=False)
