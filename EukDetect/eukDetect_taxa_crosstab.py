@@ -1,5 +1,4 @@
 import pandas as pd
-
 data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Results_python.xlsx', sheet_name='Table_with_patients')
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts', 'Patient_ID']]
 data = data[data['Name'].notna()] # drops NaN values from the column
