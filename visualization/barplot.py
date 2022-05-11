@@ -21,6 +21,8 @@ ax.set_title('Percetage of overlapping contigs in EukRep')
 ax.set_ylabel('(%)')
 ax.set_xlabel('Samples')
 ax.legend()
+#ax.set_yscale('log') # scale either x or y axis
+plt.tight_layout()
 autolabel(rect) # optional if you want the each bar value to be displayed
 #plt.show()
 plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/barplot_EukRep.png', dpi=1200)
