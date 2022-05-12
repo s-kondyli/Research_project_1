@@ -1,5 +1,6 @@
 import pandas as pd
 import sys
+# requires an existing file
 # for loop starts from the second element of the list which is the first input file & stops at the last element of the list which is the output file
 for i in sys.argv[1:-1]:
     data = pd.read_csv(i, sep='\t')
