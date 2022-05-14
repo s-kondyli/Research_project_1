@@ -1,6 +1,6 @@
 library(Nonpareil);
-samples <- read.table('samples_nonpareil.txt', sep='\t', header=TRUE, as.is=TRUE);
-attach(samples);
-nps <- Nonpareil.set(file, col=color, labels=label, plot.opts=list(plot.observed=FALSE));
-detach(samples);
+x <- c('mg.r1_653AF_nonpareil.npo','mg.r1_1042E_nonpareil.npo','mg.r1_1042F_nonpareil.npo','mg.r1_1042G_nonpareil.npo','mg.r1_1042GFJE_nonpareil.npo');
+labels <- c('653AF','1042E','1042E','1042F','1042G','1042GFJE');
+color <- c("aquamarine","blueviolet","blue","brown1","chocolate","darkgray");
+nps <- Nonpareil.set(x, labels = labels, col = color, plot.opts=list(plot.observed=FALSE, model.lwd=2));
 summary(nps);
