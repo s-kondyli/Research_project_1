@@ -1,8 +1,15 @@
-import sys 
+import sys
 import pandas as pd
-data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/topbacteria_1179_patient.csv')
-data = data[data['Name'].notna()]
-data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
-data = data.pivot(index='Name', columns='Day_related_to_HCT', values='Read_counts')
-data = data.fillna(0)
-data.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/1179_ordered.csv')
+sheet_dict = pd.read_excel(sys.argv[1], sheet_name=None, names=['name','id','reads','day'])
+topbacteria = pd.read_excel(sys.argv[2], names=['taxa'])
+topbacteria['taxa'] = topbacteria['taxa'].str.strip().drop_duplicates()
+for key, value in sheet_dict.items():
+    value['patient'] = value['id'].str.extract('(\d+)')
+    patient = value.at[0,'patient']
+    value = value.loc[(value['day'] <= 40) & (value['day'] >= 0)]
+    value = value[value['name'].isin(topbacteria['taxa'])]
+    value = value.pivot(index='name', columns='day', values='reads')
+    value = value.fillna(0)
+    with pd.ExcelWriter(sys.argv[-1], mode='a', engine='openpyxl') as writer:  # append an existing excel file which matches the output we gave in the command line
+        value.to_excel(writer, sheet_name=patient)
+
