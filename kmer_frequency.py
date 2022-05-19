@@ -19,7 +19,7 @@ def k_merFreq(sequence, kmersize):
     return kFreq
 
 kmer_dict = k_merFreq(sequence, int(sys.argv[2]))
-data = pd.DataFrame(data=kmer_dict, index=[0])
+data = pd.DataFrame(data=kmer_dict, index=[0]).T
 # Write the dictionary in an excel file 
 with pd.ExcelWriter(sys.argv[-1], engine='openpyxl') as writer:
-    data.to_excel(writer, index=False)
+    data.to_excel(writer, index=True)
