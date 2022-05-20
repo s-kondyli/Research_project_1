@@ -9,4 +9,4 @@ for key, value in sheet_dict.items():
     sheetname = x[0]
     value = value.loc[value['contig'].isin(df['contigs'])]
     with pd.ExcelWriter(sys.argv[-1], mode='a', engine='openpyxl') as writer:  
-        value.to_excel(writer, sheet_name=sheetname, index=True)  
+        value.to_excel(writer, sheet_name=sheetname, index=False)  
