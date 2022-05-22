@@ -1,0 +1,5 @@
+import pandas as pd
+import sys
+data = pd.read_csv(sys.argv[1], sep='\t', header=None, names=['kmer'])
+data[['kmer', 'freq']] = data['kmer'].str.split(' ',1,expand=True)  #split the column where you have space & save the second element of the list in another column called 'freq'
+data.to_excel('Saccharomyces_cerevisiae .xlsx', index=False)
