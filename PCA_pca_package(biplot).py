@@ -18,5 +18,4 @@ for key, value in sheet_dict.items():
     X = scaler.fit_transform(X)
     model = pca(normalize=True)
     results = model.fit_transform(X, row_labels=samples, col_labels=features) #results are a dictionary 
-    print(type(results))
     model.biplot(n_feat=3, label=False, legend=True, cmap='tab10',figsize=(10,5), hotellingt2=True, title='PCA on bacterial taxa, patient'+ ' '+ key+'\n (points represent days related to HCT)')
