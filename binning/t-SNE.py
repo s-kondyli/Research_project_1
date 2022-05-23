@@ -5,7 +5,7 @@ import sys
 import seaborn as sns
 from sklearn.manifold import TSNE
 from skbio.stats.composition import clr
-
+#not quite the same results as PCA
 data = pd.read_excel(sys.argv[1],  header=None, names=['kmer','freq','taxon'])
 data = data.pivot(index='taxon', columns='kmer', values='freq')
 data = data.drop(columns='kmer') # probably has to do with the file
