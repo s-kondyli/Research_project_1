@@ -6,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 from skbio.stats.composition import clr, multiplicative_replacement
 
 data = pd.read_excel(sys.argv[1],  header=None, names=['kmer','freq','taxon']) #input file was the control kmer profiling (4mers)
-data = data.pivot(index='taxon', columns='kmer', values='freq')
+data = data.pivot(index='taxon', columns='kmer', values='freq') #for PCA index always the samples & columns the features (kmers in this case)
 data = data.drop(columns='kmer') # probably has to do with the file (may need to remove in other files)
 features = data.columns.tolist() #features we want to reduce dimensionality
 data = data.reset_index() # because from the pivot function we had set index as taxon 
