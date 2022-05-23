@@ -1,22 +1,22 @@
 import pandas as pd
-import matplotlib.pyplot as plt
+import sys
 from pca import pca
+import numpy as np
+from sklearn.preprocessing import StandardScaler
 from skbio.stats.composition import clr, multiplicative_replacement
+#input is a excel file with muliple sheets (1 sheet & PCA per patient ID) 
+sheet_dict = pd.read_excel(sys.argv[1], sheet_name=None)
 
-data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/bacteria_1042_Patient.csv')
-data = data[data['Name'].notna()] # drops NaN values from Name column
-data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
-data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts')
-data = data.fillna(0) # fills NaN values with 0 for the matrix
-data.to_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/temp.csv')
-data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/temp.csv')
-X = data.drop('Day_related_to_HCT', axis=1)
-#Replace all zeros with small non-zero values
-X = multiplicative_replacement(X)
-# Performs centre log ratio transformation
-X = clr(X)
-labels = data.Day_related_to_HCT
-model = pca(n_components=2, normalize=True)
-results = model.fit_transform(X)
-model.biplot(n_feat=4, y=labels, legend=False)
-plt.show()
+for key, value in sheet_dict.items():
+    samples = value['day'] #for the legend in the biplot
+    value = value.drop(columns='day') #otherwise the column name 'day' is considered as feature (we don't want that)
+    features = value.columns.tolist() #for plotting the features that explain the variance in the biplot
+    X = value.to_numpy(dtype=np.float64) # very important for standarization of data
+    X = multiplicative_replacement(X) #replaces 0 with small non-zero values, necessary for clr if we have 0 in our data
+    X = clr(X) #because we have compositional data carrying relative (not absolute) information (proportion of reads sumed to a total)
+    scaler = StandardScaler(with_mean=True, with_std=True)
+    X = scaler.fit_transform(X)
+    model = pca(normalize=True)
+    results = model.fit_transform(X, row_labels=samples, col_labels=features) #results are a dictionary 
+    print(type(results))
+    model.biplot(n_feat=3, label=False, legend=True, cmap='tab10',figsize=(10,5), hotellingt2=True, title='PCA on bacterial taxa, patient'+ ' '+ key+'\n (points represent days related to HCT)')
