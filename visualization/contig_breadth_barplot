@@ -1,0 +1,28 @@
+import sys
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+sheet_dict = pd.read_excel(sys.argv[1], sheet_name=None)
+patient_list = []
+percent_breadth_1 = []
+for key, value in sheet_dict.items():
+    x = value.iloc[0, 0].split('_')
+    patient = x[0]
+    y = value['breadth_of_coverage'].sum().astype(int)
+    value.loc[value['breadth_of_coverage']==1, '1'] = 1
+    z = value['1'].sum().astype(int)
+    percent = z/y*100
+    patient_list.append(patient)
+    percent_breadth_1.append(percent)
+
+data = pd.DataFrame({'patient':patient_list, 'percent_breadth_1':percent_breadth_1})
+data = data.set_index('patient')
+fig, ax = plt.subplots()
+ax = data.plot.barh(color='pink')
+ax.set_title('Bar plot of kraken breadth of coverage')
+ax.set_xlabel('% of contigs with breadth=1')
+ax.set_ylabel('Patients')
+x = np.arange(0,110,10) # to show from 0-100% in the x axis ticks
+ax.set_xticks(x)
+plt.tight_layout()
+plt.show()
