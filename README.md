@@ -1,2 +1,2 @@
-# Research project: metagenomic data analysis of patients that undergo Hematopoietic Stem Cell Transplantation with emphasis on eukaryotes
+# Metagenomic analysis and reconstruction of the gut mycobiome in patients undergoing Haematopoietic stem cell transplantation
 
