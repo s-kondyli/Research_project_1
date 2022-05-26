@@ -1,9 +1,10 @@
 import pandas as pd
+import sys
 import matplotlib.pyplot as plt
 import seaborn as sns
 from skbio.stats.composition import clr, multiplicative_replacement
 
-data = pd.read_csv('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/mOTUs/topbacteria_1179_patient.csv')
+data = pd.read_excel(sys.argv[1])
 data = data[data['Name'].notna()]
 data = data[['Name', 'Day_related_to_HCT', 'Read_counts']]
 data = data.pivot(index='Day_related_to_HCT', columns='Name', values='Read_counts').T
