@@ -4,35 +4,47 @@ import sys
 from pca import pca
 from sklearn.preprocessing import StandardScaler
 from skbio.stats.composition import clr, multiplicative_replacement
-# takes as input the output txt file of kmer-counter and performs PCA analysis
+## takes as input the output.txt file from kmer-counter & performs PCA analysis
 
-input = pd.read_csv(sys.argv[1], sep='\t', header=None, names=['contig','kmers'])
+## Reshaping the data in the correct form for PCA: samples(contigIDs) as rows & features (kmers) as columns
+numpy_df = pd.read_csv(sys.argv[1], delimiter="\t", header=None).to_numpy()
+index, keys_values = pd.Index(numpy_df[:, 0]), numpy_df[:, 1]
+all_keys = list()
+for row in keys_values:
+    all_keys.extend([key_val.split(":")[0] for key_val in row.split()])
+all_keys = list(set(all_keys))
 
-# reshaping data from txt file to be correct for the PCA (samples as rows (contigs),features (kmers) as columns & kmerfreqs are the values
-samples = input['contig'].tolist() # for PCA later
-input = input['kmers'].str.split(' ', expand=True)
+keys_values = [{key_val.split(":")[0]: key_val.split(":")[1] for key_val in row.split()} for row in keys_values]
+data = np.zeros((len(index), len(all_keys)))
+index_of = {k: i for i, k in enumerate(all_keys)}
+for i in range(len(index)):
+    for k, v in keys_values[i].items():
+        data[i][index_of[k]] = v
 
-data = pd.DataFrame() # create an empty dataframe
-# iterate over the dataframe's columns
-for label, content in input.items():
-    df = content.str.split(':', expand=True)
-    kmer_name = df.loc[0].iat[0]
-    s = pd.Series(name=kmer_name, data=df.iloc[:,1])
-    data = data.append(s)
+df_data = pd.DataFrame(data=data, index=index, columns=all_keys)
+## Fixing the samples names & feature names for PCA
+df_data = df_data.reset_index()
+df_data = df_data.rename(columns={'index':'samples'})
 
-data = data.T
-data['samples'] = samples
 # rename the samples for visualization purposes (clustering is obvious with one color per taxon)
-data['samples'] = data['samples'].replace(regex=r'.*Candida.*', value='Candida dubliniensis')
-data['samples'] = data['samples'].replace(regex=r'.*Saccharomyces.*', value='Saccharomyces cerevisiae')
-data['samples'] = data['samples'].replace(regex=r'.*Malassezia.*', value='Malassezia restricta')
-samples = data['samples'].tolist() #yes I did it before but now I have the filtered sample names and it overrides the previous list
-data = data.drop(columns='samples')
-features = data.columns.tolist() #for the pca biplot
-X = data.to_numpy(dtype=np.float64) #
+df_data['samples'] = df_data['samples'].replace(regex=r'.*Candida dubliniensis.*', value='Candida dubliniensis')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*Candida albicans.*', value='Candida albicans')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*Candida parapsilosis.*', value='Candida parapsilosis')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*Saccharomyces.*', value='Saccharomyces cerevisiae')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*Malassezia.*', value='Malassezia restricta')
+
+samples = df_data['samples'].tolist() # for labels in biplot
+
+# Standarizing and scaling for PCA
+df_data = df_data.drop(columns='samples')
+features = df_data.columns.tolist() #for the pca biplot (show the loadings with arrows)
+
+X = df_data.to_numpy(dtype=np.float64) # very important for the clr & PCA 
+X = multiplicative_replacement(X) #replaces zero with small non-zero values (pseudo count)
 X = clr(X)
 scaler = StandardScaler(with_mean=True, with_std=True) #not sure if necessary if you have compositional data & you already did clr transformation
 X = scaler.fit_transform(X)
 model = pca(normalize=True)
 results = model.fit_transform(X, row_labels=samples, col_labels=features)
-model.biplot(n_feat=3, label=False, legend=True, cmap='tab10')
+model.biplot(n_feat=3, label=False, legend=True, cmap='tab10', hotellingt2=True)
+
