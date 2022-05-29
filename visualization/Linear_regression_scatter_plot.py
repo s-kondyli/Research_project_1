@@ -1,14 +1,26 @@
+import sys
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-data = pd.read_excel('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Results from assembly step/contigs_reads.xlsx', sheet_name='contig_count')
-x_data = data.reads.to_numpy().reshape(-1, 1)
+
+#import file: kraken/Eukrep contig_breadth.xlsx
+sheet_dict = pd.read_excel(sys.argv[1],sheet_name=None)
+readsum = []
+contig_sum = []
+for key, value in sheet_dict.items():
+    reads = value['number_of_mapping_reads'].sum()
+    contig = value['contig'].nunique()
+    contig_sum.append(contig)
+    readsum.append(reads)
+
+data = pd.DataFrame({'reads':readsum, 'contigs':contig_sum})
+# Linear regression
+x_data = data.reads.to_numpy().reshape(-1,1)
 y_data = data.contigs.to_numpy()
-x_data = np.log(x_data)
-y_data = np.log(y_data)
-# Create linear regression model
+x_data = np.log10(x_data)
+y_data = np.log10(y_data)
 X = linear_model.LinearRegression()
 # Train the model using the data
 X.fit(x_data, y_data)
@@ -23,12 +35,10 @@ print("Coefficient of determination: %.2f" % r2_score(y_data, y_pred))
 
 # Scatter plot
 plt.scatter(x_data, y_data, color="black")
-plt.plot(x_data, y_pred, color="g", linewidth=2)
-plt.title('Linear Regression scatter plot \n (log scale)')
+plt.plot(x_data, y_pred, color="mediumslateblue", linewidth=1)
+plt.title('EukRep assembly scatter plot \n (log10 scale)')
 plt.xlabel('Number of reads')
-plt.ylabel('Sum of contigs')
+plt.ylabel('Sum contigs')
 plt.tight_layout()
-plt.yticks(()) # don't show the ticks
-plt.xticks(())
-#plt.show()
-plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/Linear_regression_sum',dpi=1200)
+plt.show()
+#plt.savefig('C:/Users/lilak/Documents/Master BMS-O/Research Project 1/Python/Plots/Linear_regression_sum',dpi=1200)
