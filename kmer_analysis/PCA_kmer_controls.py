@@ -22,7 +22,7 @@ for i in range(len(index)):
         data[i][index_of[k]] = v
 
 df_data = pd.DataFrame(data=data, index=index, columns=all_keys)
-## Fixing the samples names & feature names for PCA
+## Fixing the samples names & feature names for PCA visualization 
 df_data = df_data.reset_index()
 df_data = df_data.rename(columns={'index':'samples'})
 
@@ -32,9 +32,20 @@ df_data['samples'] = df_data['samples'].replace(regex=r'.*Candida albicans.*', v
 df_data['samples'] = df_data['samples'].replace(regex=r'.*Candida parapsilosis.*', value='Candida parapsilosis')
 df_data['samples'] = df_data['samples'].replace(regex=r'.*Saccharomyces.*', value='Saccharomyces cerevisiae')
 df_data['samples'] = df_data['samples'].replace(regex=r'.*Malassezia.*', value='Malassezia restricta')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1042.*', value='1042')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1044.*', value='1044')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1179.*', value='1179')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*653.*', value='653')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1105.*', value='1105')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1193.*', value='1193')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1203.*', value='1203')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1252.*', value='1252')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*1414.*', value='1414')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*2065.*', value='2065')
+df_data['samples'] = df_data['samples'].replace(regex=r'.*2142.*', value='2142')
 
 samples = df_data['samples'].tolist() # for labels in biplot
-
+print(df_data.shape) # to see the number of contigs & features you have eventually 
 # Standarizing and scaling for PCA
 df_data = df_data.drop(columns='samples')
 features = df_data.columns.tolist() #for the pca biplot (show the loadings with arrows)
