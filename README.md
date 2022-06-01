@@ -3,4 +3,5 @@ A bunch of a few (hopefully) useful scripts for metagenomic data analysis & visu
 
 
 Contributor: Spyridoula Kondyli, Msc student in Biomedical Sciences-track Oncology, University of Amsterdam.
+
 This project was part of my first internship in the Biosystems Data Analysis Group of Swammerdam Institute for Life sciences, University of Amsterdam 
